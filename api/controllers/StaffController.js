@@ -46,16 +46,17 @@ exports.Staff_create_Staff = (req, res, next) => {
 }
 
 exports.Staff_edit_Staff = (req, res, next) => {
-  db.collection("Staff").where('Ids', '==', req.params.Ids).get().then((snapshot) => {
-    snapshot.forEach((doc) => {
-      console.log("PUT Staff")
-      //console.log(req.body);
-      var data = JSON.parse(JSON.stringify(Staff(req.body)));
-      console.log(data)
-      db.collection('Staff').doc(doc.id).update(data);
-    });
-    res.send(data);
-  })
+  db.collection("Staff").where('Uid', '==', req.params.Uid).get()
+    .then((snapshot) => {
+      snapshot.forEach((doc) => {
+        console.log("PUT Staff")
+        //console.log(req.body);
+        var data = JSON.parse(JSON.stringify(Staff(req.body)));
+        console.log(data)
+        db.collection('Staff').doc(doc.id).update(data);
+        res.send(data);
+      });
+    })
     .catch((err) => {
       console.log('Error getting documents', err);
     });
