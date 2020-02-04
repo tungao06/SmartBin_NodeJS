@@ -4,7 +4,7 @@ const staffController = require("../controllers/StaffController");
 
 router.get('/', staffController.Staff_get_all);
 
-router.get('/:Ids', staffController.Staff_get_Staff);
+router.get('/:Uid', staffController.Staff_get_Staff);
 
 router.post('/', staffController.Staff_create_Staff);
 

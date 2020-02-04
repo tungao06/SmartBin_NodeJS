@@ -22,7 +22,7 @@ var data = [];
 exports.Staff_get_Staff = (req, res, next) => {
   console.log("GET Staff BY ID");
   var data = [];
-  db.collection("Staff").where('Ids', '==', req.params.Ids).orderBy('_id').get()
+  db.collection("Staff").where('Uid', '==', req.params.Uid).get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
         console.log(doc.id, '=>', doc.data());
