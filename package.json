@@ -5,7 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npm start server.js"
+    "start": "npm start server.js",
+    "debug": "node --nolazy --inspect-brk=9229 server.js"
   },
   "author": "",
   "license": "ISC",
@@ -17,6 +18,7 @@
     "express": "^4.17.1",
     "firebase-admin": "^8.9.2",
     "firebase-functions": "^3.3.0",
-    "mongoose": "^5.8.11"
+    "mongoose": "^5.8.11",
+    "mongoose-float": "^1.0.4"
   }
 }

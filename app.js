@@ -5,7 +5,10 @@ const app = express();
 const bodyParser = require('body-parser');
 
 const smartBinRoutes = require("./api/routes/SmartBinRoutes");
-
+const staffRoutes = require("./api/routes/StaffRoutes");
+const userRoutes = require("./api/routes/UserRoutes");
+const locationRoutes = require("./api/routes/LocationRoutes");
+const binRoutes = require("./api/routes/BinRoutes");
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -25,6 +28,10 @@ app.use((req, res, next) => {
 
 //Routes which should handle requests
 app.use("/SmartBin", smartBinRoutes);
+app.use("/Staff", staffRoutes);
+app.use("/User", userRoutes);
+app.use("/Bin", binRoutes);
+app.use("/Location", locationRoutes);
 
 app.use((req, res, next) => {
     const error = new Error("Not found");

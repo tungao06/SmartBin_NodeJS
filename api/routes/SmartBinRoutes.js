@@ -2,15 +2,15 @@ const express = require("express");
 const router = express.Router();
 const SmartBinController = require("../controllers/SmartBinController");
 
-router.get('/', SmartBinController.smartbin_get_all);
+router.get('/', SmartBinController.SmartBin_get_all);
 
-router.get('/:Ids', SmartBinController.smartbin_get_smartbin);
+router.get('/:Ids', SmartBinController.SmartBin_get_SmartBin);
 
-router.post('/', SmartBinController.smartbin_create_smartbin);
+router.post('/', SmartBinController.SmartBin_create_SmartBin);
 
-router.put('/:Ids', SmartBinController.smartbin_edit_smartbin);
+router.put('/:Ids', SmartBinController.SmartBin_edit_SmartBin);
 
-router.delete("/:Ids", SmartBinController.smartbin_delete_smartbin);
+router.delete("/:Ids", SmartBinController.SmartBin_delete_SmartBin);
 
 
 module.exports = router;

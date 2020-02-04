@@ -1,46 +1,33 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const smartbin = require('../models/SmartBinModel');
-const app = require('../../app');
+const SmartBin = require('../models/SmartBinModel');
+const db = require('../../Setting');
 
 
-var admin = require("firebase-admin");
-
-var serviceAccount = require("../../ServiceAccountKey.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://smartbin-95f7a.firebaseio.com"
-});
-
-
-let db = admin.firestore();
-
-
-exports.smartbin_get_all = (req, res, next) => {
-var data =[];
-  console.log("GET SMARTBIN ALL");
+exports.SmartBin_get_all = (req, res, next) => {
+  var data = [];
+  console.log("GET SmartBin ALL");
   db.collection("SmartBin").get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
         console.log(doc.id, '=>', doc.data());
         data.push(doc.data());
       });
-        res.send(data);
+      res.send(data);
     })
     .catch(err => {
       console.log('Error getting documents', err);
     });
 }
 
-exports.smartbin_get_smartbin = (req, res, next) => {
-  console.log("GET SMARTBIN BY ID");
+exports.SmartBin_get_SmartBin = (req, res, next) => {
+  console.log("GET SmartBin BY ID");
   db.collection("SmartBin").where('Ids', '==', req.params.Ids).get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
         console.log(doc.id, '=>', doc.data());
-        res.on(doc.data());
       });
+        res.send(doc.data());
     })
     .catch((err) => {
       console.log('Error getting documents', err);
@@ -48,31 +35,35 @@ exports.smartbin_get_smartbin = (req, res, next) => {
     });
 }
 
-exports.smartbin_create_smartbin = (req, res, next) => {
-  console.log("POST SMARTBIN")
-  console.log(req.body)
-  db.collection('SmartBin').doc().set(req.body);
-  res.send(req.body);
+exports.SmartBin_create_SmartBin = (req, res, next) => {
+  console.log("POST SmartBin")
+  //console.log(req.body);
+  var data = JSON.parse(JSON.stringify(SmartBin(req.body)));
+  console.log(data)
+  db.collection('SmartBin').doc().set(data);
+  res.send(data);
 }
 
-exports.smartbin_edit_smartbin = (req, res, next) => {
+exports.SmartBin_edit_SmartBin = (req, res, next) => {
   db.collection("SmartBin").where('Ids', '==', req.params.Ids).get().then((snapshot) => {
     snapshot.forEach((doc) => {
-      console.log("PUT SMARTBIN")
-      console.log(req.body)
-      db.collection('SmartBin').doc(doc.id).update(req.body);
-      res.send(req.body);
+      console.log("PUT SmartBin")
+      //console.log(req.body);
+      var data = JSON.parse(JSON.stringify(SmartBin(req.body)));
+      console.log(data)
+      db.collection('SmartBin').doc(doc.id).update(data)
     });
+    res.send(data);
   })
     .catch((err) => {
       console.log('Error getting documents', err);
     });
 }
 
-exports.smartbin_delete_smartbin = (req, res, next) => {
+exports.SmartBin_delete_SmartBin = (req, res, next) => {
   db.collection("SmartBin").where('Ids', '==', req.params.Ids).get().then((snapshot) => {
     snapshot.forEach((doc) => {
-      console.log("DELETE SMARTBIN")
+      console.log("DELETE SmartBin")
       db.collection('SmartBin').doc(doc.id).delete();
       res.send(doc.data());
     });

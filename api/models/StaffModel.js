@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 
 const UserSchema = new mongoose.Schema({
-    _id: mongoose.Schema.Types.ObjectId,
+    //_id: mongoose.Schema.Types.ObjectId,
     Ids :{
         type:String,
         //required: '{PATH} is required!'
@@ -29,7 +29,7 @@ const UserSchema = new mongoose.Schema({
         type:String
     }
 },{
-    timestamps: true
+    timestamps:true
 })
 
 
