@@ -4,7 +4,7 @@ const LocationController = require("../controllers/LocationController");
 
 router.get('/', LocationController.Location_get_all);
 
-router.get('/:Ids', LocationController.Location_get_Location);
+router.get('/:_id', LocationController.Location_get_Location);
 
 router.post('/', LocationController.Location_create_Location);
 

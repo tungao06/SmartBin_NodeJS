@@ -6,7 +6,7 @@ const db = require('../../Setting');
 exports.User_get_all = (req, res, next) => {
 var data = [];
   console.log("GET User ALL");
-  db.collection("User").get()
+  db.collection("User").orderBy('_id').get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
         console.log(doc.id, '=>', doc.data());
@@ -22,7 +22,7 @@ var data = [];
 exports.User_get_User = (req, res, next) => {
   console.log("GET User BY ID");
   var data = [];
-  db.collection("User").where('Ids', '==', req.params.Ids).get()
+  db.collection("User").where('Ids', '==', req.params.Ids).orderBy('_id').get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
         console.log(doc.id, '=>', doc.data());

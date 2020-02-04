@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+var Float = require('mongoose-float').loadType(mongoose);
+
 
 
 const UserSchema = new mongoose.Schema({
@@ -13,13 +15,24 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     Location:
-    [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Location'
-    }]
+        [
+            {
+                Name: {
+                    type: String,
+                    required: true
+                },
+                Latitude: {
+                    type: Float,
+                    required: true
+                },
+                Longitude: {
+                    type: Float,
+                    required: true
+                }
+            }]
 
-},{
-    timestamps:true
+}, {
+    timestamps: true
 });
 
 

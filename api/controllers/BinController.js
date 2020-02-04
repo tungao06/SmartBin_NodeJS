@@ -7,7 +7,7 @@ const db = require('../../Setting');
 exports.Bin_get_all = (req, res, next) => {
   var data = [];
   console.log("GET Bin ALL");
-  db.collection("Bin").get()
+  db.collection("Bin").orderBy('_id').get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
         console.log(doc.id, '=>', doc.data());
@@ -22,7 +22,7 @@ exports.Bin_get_all = (req, res, next) => {
 
 exports.Bin_get_Bin = (req, res, next) => {
   console.log("GET Bin BY ID");
-  db.collection("Bin").where('Ids', '==', req.params.Ids).get()
+  db.collection("Bin").where('Ids', '==', req.params.Ids).orderBy('_id').get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
         console.log(doc.id, '=>', doc.data());

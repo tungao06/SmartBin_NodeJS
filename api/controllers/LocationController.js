@@ -7,7 +7,7 @@ const db = require('../../Setting');
 exports.Location_get_all = (req, res, next) => {
   var data = [];
   console.log("GET Location ALL");
-  db.collection("Location").get()
+  db.collection("Location").orderBy('_id').get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
         console.log(doc.id, '=>', doc.data());
@@ -22,12 +22,13 @@ exports.Location_get_all = (req, res, next) => {
 
 exports.Location_get_Location = (req, res, next) => {
   console.log("GET Location BY ID");
-  db.collection("Location").where('Ids', '==', req.params.Ids).get()
+  console.log(req.params._id);
+  db.collection("Location").where('_id', '==', req.params._id).get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
         console.log(doc.id, '=>', doc.data());
-      });
       res.send(doc.data());
+      });
     })
     .catch((err) => {
       console.log('Error getting documents', err);

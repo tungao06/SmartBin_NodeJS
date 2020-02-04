@@ -24,10 +24,20 @@ const UserSchema = new mongoose.Schema({
     },
     Bin: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Bin'
+            GoodBin: {
+                type: Number
+            },
+            BadBin: {
+                type: Number
+            }
         }
     ]
+    // Bin: [
+    //     {
+    //         type: mongoose.Schema.Types.ObjectId,
+    //         ref: 'Bin'
+    //     }
+    // ]
 }, {
     timestamps: true
 })
