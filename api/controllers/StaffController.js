@@ -21,18 +21,16 @@ exports.Staff_get_all = (req, res, next) => {
 
 exports.Staff_get_Staff = (req, res, next) => {
   console.log("GET Staff BY ID");
-  var data = [];
   db.collection("Staff").where('Uid', '==', req.params.Uid).get()
     .then((snapshot) => {
       if (snapshot.empty) {
         console.log('No matching documents.');
-        next()
+        return next();
       } else {
         snapshot.forEach((doc) => {
           console.log(doc.id, '=>', doc.data());
-          data.push(doc.data());
+          res.send(doc.data());
         });
-        res.send(data);
         console.log("finish");
       }
 
