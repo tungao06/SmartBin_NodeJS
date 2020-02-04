@@ -4,7 +4,7 @@ const Staff = require('../models/StaffModel');
 const db = require('../../Setting');
 
 exports.Staff_get_all = (req, res, next) => {
-var data = [];
+  var data = [];
   console.log("GET Staff ALL");
   db.collection("Staff").orderBy('_id').get()
     .then((snapshot) => {
@@ -12,7 +12,7 @@ var data = [];
         console.log(doc.id, '=>', doc.data());
         data.push(doc.data());
       });
-        res.send(data);
+      res.send(data);
     })
     .catch(err => {
       console.log('Error getting documents', err);
@@ -21,14 +21,14 @@ var data = [];
 
 exports.Staff_get_Staff = (req, res, next) => {
   console.log("GET Staff BY ID");
-  var data = [];
   db.collection("Staff").where('Uid', '==', req.params.Uid).get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
         console.log(doc.id, '=>', doc.data());
-        data.push(doc.data());
+        res.send(doc.data());
       });
-        res.send(data);
+      console.log("finish");
+      next();
     })
     .catch((err) => {
       console.log('Error getting documents', err);
@@ -54,7 +54,7 @@ exports.Staff_edit_Staff = (req, res, next) => {
       console.log(data)
       db.collection('Staff').doc(doc.id).update(data);
     });
-      res.send(data);
+    res.send(data);
   })
     .catch((err) => {
       console.log('Error getting documents', err);
