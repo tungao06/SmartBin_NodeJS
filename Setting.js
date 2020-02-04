@@ -1,11 +1,12 @@
 
+
 var admin = require("firebase-admin");
 
 var serviceAccount = require("./ServiceAccountKey.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL: "https://smartbin-95f7a.firebaseio.com"
+  databaseURL: "https://smartbin-demo-58f9d.firebaseio.com"
 });
 
 
