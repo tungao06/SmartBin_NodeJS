@@ -52,7 +52,7 @@ exports.User_create_User = (req, res, next) => {
 }
 
 exports.User_edit_User = (req, res, next) => {
-  db.collection("User").where('Ids', '==', req.params.Ids).get().then((snapshot) => {
+  db.collection("User").where('Uid', '==', req.params.Uid).get().then((snapshot) => {
     if (snapshot.empty) {
       console.log('No matching documents.');
       return next();

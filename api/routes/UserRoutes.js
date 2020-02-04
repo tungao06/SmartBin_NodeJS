@@ -8,7 +8,7 @@ router.get('/:Uid', UserController.User_get_User);
 
 router.post('/', UserController.User_create_User);
 
-router.put('/:Ids', UserController.User_edit_User);
+router.put('/:Uid', UserController.User_edit_User);
 
 router.delete('/:Ids', UserController.User_delete_User);
 
