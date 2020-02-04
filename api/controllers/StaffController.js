@@ -41,7 +41,7 @@ exports.Staff_create_Staff = (req, res, next) => {
   //console.log(req.body);
   var data = JSON.parse(JSON.stringify(Staff(req.body)));
   console.log(data)
-  db.collection('Staff').doc().set(Staff(data));
+  db.collection('Staff').doc().set(data);
   res.send(data);
 }
 
