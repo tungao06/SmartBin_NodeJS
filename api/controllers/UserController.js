@@ -4,7 +4,7 @@ const User = require('../models/UserModel');
 const db = require('../../Setting');
 
 exports.User_get_all = (req, res, next) => {
-var data = [];
+  var data = [];
   console.log("GET User ALL");
   db.collection("User").orderBy('_id').get()
     .then((snapshot) => {
@@ -12,7 +12,7 @@ var data = [];
         console.log(doc.id, '=>', doc.data());
         data.push(doc.data());
       });
-        res.send(data);
+      res.send(data);
     })
     .catch(err => {
       console.log('Error getting documents', err);
@@ -22,13 +22,19 @@ var data = [];
 exports.User_get_User = (req, res, next) => {
   console.log("GET User BY ID");
   var data = [];
-  db.collection("User").where('Ids', '==', req.params.Ids).orderBy('_id').get()
+  db.collection("User").where('Uid', '==', req.params.Uid).get()
     .then((snapshot) => {
-      snapshot.forEach((doc) => {
-        console.log(doc.id, '=>', doc.data());
-        data.push(doc.data());
-      });
-        res.send(data);
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+        return next();
+      } else {
+        snapshot.forEach((doc) => {
+          console.log(doc.id, '=>', doc.data());
+          res.send(doc.data());
+        });
+        console.log("finish");
+      }
+
     })
     .catch((err) => {
       console.log('Error getting documents', err);
@@ -47,14 +53,19 @@ exports.User_create_User = (req, res, next) => {
 
 exports.User_edit_User = (req, res, next) => {
   db.collection("User").where('Ids', '==', req.params.Ids).get().then((snapshot) => {
-    snapshot.forEach((doc) => {
-      console.log("PUT User")
-      //console.log(req.body);
-      var data = JSON.parse(JSON.stringify(User(req.body)));
-      console.log(data)
-      db.collection('User').doc(doc.id).update(data);
-    });
-      res.send(data);
+    if (snapshot.empty) {
+      console.log('No matching documents.');
+      return next();
+    } else {
+      snapshot.forEach((doc) => {
+        console.log("PUT User")
+        //console.log(req.body);
+        var data = JSON.parse(JSON.stringify(User(req.body)));
+        console.log(data)
+        db.collection('User').doc(doc.id).update(data);
+        res.send(data);
+      });
+    }
   })
     .catch((err) => {
       console.log('Error getting documents', err);
@@ -62,13 +73,19 @@ exports.User_edit_User = (req, res, next) => {
 }
 
 exports.User_delete_User = (req, res, next) => {
-  db.collection("User").where('Ids', '==', req.params.Ids).get().then((snapshot) => {
-    snapshot.forEach((doc) => {
-      console.log("DELETE User")
-      db.collection('User').doc(doc.id).delete();
-      res.send(doc.data());
-    });
-  })
+  db.collection("User").where('Ids', '==', req.params.Ids).get()
+    .then((snapshot) => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+        return next();
+      } else {
+        snapshot.forEach((doc) => {
+          console.log("DELETE User")
+          db.collection('User').doc(doc.id).delete();
+          res.send(doc.data());
+        });
+      }
+    })
     .catch((err) => {
       console.log('Error getting documents', err);
     });

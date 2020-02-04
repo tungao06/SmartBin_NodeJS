@@ -33,7 +33,6 @@ exports.Staff_get_Staff = (req, res, next) => {
         });
         console.log("finish");
       }
-
     })
     .catch((err) => {
       console.log('Error getting documents', err);
@@ -53,14 +52,19 @@ exports.Staff_create_Staff = (req, res, next) => {
 exports.Staff_edit_Staff = (req, res, next) => {
   db.collection("Staff").where('Uid', '==', req.params.Uid).get()
     .then((snapshot) => {
-      snapshot.forEach((doc) => {
-        console.log("PUT Staff")
-        //console.log(req.body);
-        var data = JSON.parse(JSON.stringify(Staff(req.body)));
-        console.log(data)
-        db.collection('Staff').doc(doc.id).update(data);
-        res.send(data);
-      });
+      console.log("PUT Staff")
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+        return next();
+      } else {
+        snapshot.forEach((doc) => {
+          //console.log(req.body);
+          var data = JSON.parse(JSON.stringify(Staff(req.body)));
+          console.log(data)
+          db.collection('Staff').doc(doc.id).update(data);
+          res.send(data);
+        });
+      }
     })
     .catch((err) => {
       console.log('Error getting documents', err);
@@ -68,13 +72,19 @@ exports.Staff_edit_Staff = (req, res, next) => {
 }
 
 exports.Staff_delete_Staff = (req, res, next) => {
-  db.collection("Staff").where('Ids', '==', req.params.Ids).get().then((snapshot) => {
-    snapshot.forEach((doc) => {
-      console.log("DELETE Staff")
-      db.collection('Staff').doc(doc.id).delete();
-      res.send(doc.data());
-    });
-  })
+  db.collection("Staff").where('Ids', '==', req.params.Ids).get()
+    .then((snapshot) => {
+      snapshot.forEach((doc) => {
+        console.log("DELETE Staff")
+        if (snapshot.empty) {
+          console.log('No matching documents.');
+          return next();
+        } else {
+          db.collection('Staff').doc(doc.id).delete();
+          res.send(doc.data());
+        }
+      });
+    })
     .catch((err) => {
       console.log('Error getting documents', err);
     });

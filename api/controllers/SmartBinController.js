@@ -23,12 +23,18 @@ exports.SmartBin_get_all = (req, res, next) => {
 
 exports.SmartBin_get_SmartBin = (req, res, next) => {
   console.log("GET SmartBin BY ID");
-  db.collection("SmartBin").where('Ids', '==', req.params.Ids).orderBy('_id').get()
+  db.collection("SmartBin").where('Ids', '==', req.params.Ids).get()
     .then((snapshot) => {
-      snapshot.forEach((doc) => {
-        console.log(doc.id, '=>', doc.data());
-      });
-      res.send(doc.data());
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+        return next();
+      } else {
+        snapshot.forEach((doc) => {
+          console.log(doc.id, '=>', doc.data());
+        res.send(doc.data());
+        });
+        console.log("finish");
+      }
     })
     .catch((err) => {
       console.log('Error getting documents', err);
@@ -47,14 +53,19 @@ exports.SmartBin_create_SmartBin = (req, res, next) => {
 
 exports.SmartBin_edit_SmartBin = (req, res, next) => {
   db.collection("SmartBin").where('Ids', '==', req.params.Ids).get().then((snapshot) => {
-    snapshot.forEach((doc) => {
-      console.log("PUT SmartBin")
-      //console.log(req.body);
-      var data = JSON.parse(JSON.stringify(SmartBin(req.body)));
-      console.log(data)
-      db.collection('SmartBin').doc(doc.id).update(data)
-    });
-    res.send(data);
+    if (snapshot.empty) {
+      console.log('No matching documents.');
+      return next();
+    } else {
+      snapshot.forEach((doc) => {
+        console.log("PUT SmartBin")
+        //console.log(req.body);
+        var data = JSON.parse(JSON.stringify(SmartBin(req.body)));
+        console.log(data)
+        db.collection('SmartBin').doc(doc.id).update(data)
+        res.send(data);
+      });
+    }
   })
     .catch((err) => {
       console.log('Error getting documents', err);
@@ -62,13 +73,20 @@ exports.SmartBin_edit_SmartBin = (req, res, next) => {
 }
 
 exports.SmartBin_delete_SmartBin = (req, res, next) => {
-  db.collection("SmartBin").where('Ids', '==', req.params.Ids).get().then((snapshot) => {
-    snapshot.forEach((doc) => {
-      console.log("DELETE SmartBin")
-      db.collection('SmartBin').doc(doc.id).delete();
-      res.send(doc.data());
-    });
-  })
+  db.collection("SmartBin").where('Ids', '==', req.params.Ids).get()
+    .then((snapshot) => {
+
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+        return next();
+      } else {
+        snapshot.forEach((doc) => {
+          console.log("DELETE SmartBin")
+          db.collection('SmartBin').doc(doc.id).delete();
+          res.send(doc.data());
+        });
+      }
+    })
     .catch((err) => {
       console.log('Error getting documents', err);
     });
