@@ -8,11 +8,11 @@ const PostSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    Latitude: {
+    lat: {
         type: Float ,
         required: true
     },
-    Longitude: {
+    lon: {
         type: Float ,
         required: true
     },

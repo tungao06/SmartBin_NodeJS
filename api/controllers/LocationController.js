@@ -25,10 +25,17 @@ exports.Location_get_Location = (req, res, next) => {
   console.log(req.params._id);
   db.collection("Location").where('_id', '==', req.params._id).get()
     .then((snapshot) => {
-      snapshot.forEach((doc) => {
-        console.log(doc.id, '=>', doc.data());
-      res.send(doc.data());
-      });
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+        return next();
+      } else {
+        snapshot.forEach((doc) => {
+          console.log(doc.id, '=>', doc.data());
+          res.send(doc.data());
+        });
+        console.log("finish");
+      }
+
     })
     .catch((err) => {
       console.log('Error getting documents', err);
@@ -46,29 +53,42 @@ exports.Location_create_Location = (req, res, next) => {
 }
 
 exports.Location_edit_Location = (req, res, next) => {
-  db.collection("Location").where('Ids', '==', req.params.Ids).get().then((snapshot) => {
-    snapshot.forEach((doc) => {
-      console.log("PUT Location")
-      //console.log(req.body)
-      var data = JSON.parse(JSON.stringify(Location(req.body)));
-      console.log(data)
-      db.collection('Location').doc(doc.id).update(data)
-    });
-    res.send(data);
-  })
+  db.collection("Location").where('Ids', '==', req.params.Ids).get()
+    .then((snapshot) => {
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+        return next();
+      } else {
+        snapshot.forEach((doc) => {
+          console.log("PUT Location")
+          //console.log(req.body)
+          var data = JSON.parse(JSON.stringify(Location(req.body)));
+          console.log(data)
+          db.collection('Location').doc(doc.id).update(data)
+          res.send(data);
+        });
+      }
+    })
     .catch((err) => {
       console.log('Error getting documents', err);
     });
 }
 
 exports.Location_delete_Location = (req, res, next) => {
-  db.collection("Location").where('Ids', '==', req.params.Ids).get().then((snapshot) => {
-    snapshot.forEach((doc) => {
-      console.log("DELETE Location")
-      db.collection('Location').doc(doc.id).delete();
-      res.send(doc.data());
-    });
-  })
+  db.collection("Location").where('Ids', '==', req.params.Ids).get()
+    .then((snapshot) => {
+
+      if (snapshot.empty) {
+        console.log('No matching documents.');
+        return next();
+      } else {
+        snapshot.forEach((doc) => {
+          console.log("DELETE Location")
+          db.collection('Location').doc(doc.id).delete();
+          res.send(doc.data());
+        });
+      }
+    })
     .catch((err) => {
       console.log('Error getting documents', err);
     });
