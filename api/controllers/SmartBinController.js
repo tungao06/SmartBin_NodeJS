@@ -48,19 +48,29 @@ exports.SmartBin_get_SmartBin = (req, res, next) => {
     });
 };
 
-exports.SmartBin_create_SmartBin = (req, res, next) => {
-  console.log("POST SmartBin");
-  //console.log(req.body);
-  QRCode.toDataURL("www.google.com", function(err, url) {
-    console.log(url);
-    req.body.Image = url;
+// Generation QR Code Data In SmartBin Image
+function GenQRCode(data) {
+  return new Promise((resolve, reject) => {
+    resolve(QRCode.toDataURL(data));
   });
-  var data = JSON.parse(JSON.stringify(new SmartBin(req.body)));
+}
+
+
+exports.SmartBin_create_SmartBin = async (req, res, next) => {
+  console.log("POST SmartBin");
+
+  let qr = await GenQRCode(req.body.Ids);
+  //console.log(qr);
+  req.body.Image = qr;
+
+  var data = JSON.parse(JSON.stringify(SmartBin(req.body)));
   console.log(data);
   db.collection("SmartBin")
     .doc()
     .set(data);
+
   res.send(data);
+
   console.log("finish");
 };
 
