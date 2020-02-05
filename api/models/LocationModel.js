@@ -3,6 +3,7 @@ var Float = require('mongoose-float').loadType(mongoose,10);
 
 
 const PostSchema = mongoose.Schema({
+    _id: mongoose.Schema.Types.ObjectId,
     Name: {
         type: String,
         required: true
