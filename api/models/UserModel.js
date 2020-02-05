@@ -22,6 +22,9 @@ const UserSchema = new mongoose.Schema({
     Photo: {
         type: String
     },
+    Point: {
+        type: Number
+    },
     Bin: [
         {
             GoodBin: {
