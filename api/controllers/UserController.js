@@ -7,7 +7,6 @@ exports.User_get_all = (req, res, next) => {
   var data = [];
   console.log("GET User ALL");
   db.collection("User")
-    .orderBy("_id")
     .get()
     .then(snapshot => {
       snapshot.forEach(doc => {
@@ -112,22 +111,19 @@ exports.User_edit_Point = (req, res, next) => {
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
-        console.log("No matching documents.");
-        return next();
-      } else {
-        snapshot.forEach(doc => {
+
           console.log("PUT User");
           db.collection("User")
             .doc(doc.id)
             .update({Point: req.params.Point});
           res.send(doc.data());
-        });
       }
     })
     .catch(err => {
       console.log("Error getting documents", err);
     });
 };
+
 //Complex API
 exports.User_edit_User_Bin = (req, res, next) => {
   db.collection("User")
