@@ -1,50 +1,41 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-
-const UserSchema = new mongoose.Schema({
+const UserSchema = new mongoose.Schema(
+  {
     //_id: mongoose.Schema.Types.ObjectId,
     Ids: {
-        type: String,
-        //required: '{PATH} is required!'
+      type: String
+      //required: '{PATH} is required!'
     },
     Uid: {
-        type: String
+      type: String
     },
     Name: {
-        type: String
+      type: String
     },
     Email: {
-        type: String
+      type: String
     },
     Phone: {
-        type: String
+      type: String
     },
     Photo: {
-        type: String
+      type: String
     },
     Point: {
-        type: Number
+      type: Number
     },
-    Bin: [
-        {
-            GoodBin: {
-                type: Number
-            },
-            BadBin: {
-                type: Number
-            }
-        }
-    ]
-    // Bin: [
-    //     {
-    //         type: mongoose.Schema.Types.ObjectId,
-    //         ref: 'Bin'
-    //     }
-    // ]
-}, {
+    GoodBin: {
+      type: Number
+    },
+    BadBin: {
+      type: Number
+    }
+
+  },
+  {
     timestamps: true
-})
+  }
+);
 
-
-
-module.exports = mongoose.model('User', UserSchema);
+module.exports = mongoose.model("User", UserSchema);
