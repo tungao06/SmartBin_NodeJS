@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-var Float = require('mongoose-float').loadType(mongoose);
+var Float = require('mongoose-float').loadType(mongoose,10);
 
 
 
