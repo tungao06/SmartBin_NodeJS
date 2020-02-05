@@ -13,4 +13,7 @@ router.put('/:Uid', UserController.User_edit_User);
 router.delete('/:Ids', UserController.User_delete_User);
 
 
+router.put('/:Uid/:GoodBin/:BadBin', UserController.User_edit_User_Bin);
+
+
 module.exports = router;
