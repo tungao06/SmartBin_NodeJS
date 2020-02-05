@@ -22,6 +22,10 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    UserUid: {
+        type: String,
+        required: true
+    },
     Location:
         [
             {

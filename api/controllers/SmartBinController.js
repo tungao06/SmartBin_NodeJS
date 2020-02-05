@@ -55,7 +55,6 @@ function GenQRCode(data) {
   });
 }
 
-
 exports.SmartBin_create_SmartBin = async (req, res, next) => {
   console.log("POST SmartBin");
 
@@ -124,8 +123,11 @@ exports.SmartBin_delete_SmartBin = (req, res, next) => {
     });
 };
 
+//var snap = false;
+
 //Complex API
 exports.SmartBin_put_SmartBin_ChangeState = (req, res, next) => {
+  var state;
   db.collection("SmartBin")
     .where("Ids", "==", req.params.Ids)
     .get()
@@ -134,11 +136,38 @@ exports.SmartBin_put_SmartBin_ChangeState = (req, res, next) => {
         console.log("No matching documents.");
         return next();
       } else {
+        //Put State
         snapshot.forEach(doc => {
           db.collection("SmartBin")
             .doc(doc.id)
-            .update({ State: req.params.State });
+            .update({ State: req.params.State,UserUid: req.params.UserUid });
           res.send("PUT State Success");
+          //Snapshot State
+           db
+            .collection("SmartBin")
+            .doc(doc.id)
+            .onSnapshot(
+              snapshot => {
+                switch (snapshot.data().State) {
+                  case "0":
+                    console.log("OFF");
+                    break;
+                  case "1":
+                    console.log("WAITING");
+                    break;
+                  case "2":
+                    console.log("START");
+                    break;
+                }
+                // ...
+              },
+              err => {
+                console.log(`Encountered error: ${err}`);
+              }
+            );
+          //console.log(state);
+          //Snapshot State
+          console.log(this.state);
         });
       }
     })
