@@ -120,7 +120,7 @@ exports.User_edit_Point = (req, res, next) => {
           db.collection("User")
             .doc(doc.id)
             .update({Point: req.params.Point});
-          res.send(data);
+          res.send(doc.data());
         });
       }
     })
