@@ -12,5 +12,9 @@ router.put('/:Ids', SmartBinController.SmartBin_edit_SmartBin);
 
 router.delete("/:Ids", SmartBinController.SmartBin_delete_SmartBin);
 
+//Complex API
+
+router.put('/:Ids/:Status', SmartBinController.SmartBin_put_SmartBin_ChangeState);
+
 
 module.exports = router;

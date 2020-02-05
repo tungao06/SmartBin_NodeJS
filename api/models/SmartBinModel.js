@@ -11,6 +11,14 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     Status: {
+        type: Number,
+        required: true
+    },
+    State: {
+        type: Number,
+        required: true
+    },
+    Image: {
         type: String,
         required: true
     },

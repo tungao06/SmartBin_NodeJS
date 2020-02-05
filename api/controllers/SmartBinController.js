@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const SmartBin = require('../models/SmartBinModel');
 const db = require('../../Setting');
 
+const User = require('../controllers/UserController');
 
 exports.SmartBin_get_all = (req, res, next) => {
   var data = [];
@@ -31,7 +32,7 @@ exports.SmartBin_get_SmartBin = (req, res, next) => {
       } else {
         snapshot.forEach((doc) => {
           console.log(doc.id, '=>', doc.data());
-        res.send(doc.data());
+          res.send(doc.data());
         });
         console.log("finish");
       }
@@ -87,6 +88,24 @@ exports.SmartBin_delete_SmartBin = (req, res, next) => {
         });
       }
     })
+    .catch((err) => {
+      console.log('Error getting documents', err);
+    });
+}
+
+//Complex API
+exports.SmartBin_put_SmartBin_ChangeState = (req, res, next) => {
+  db.collection("SmartBin").where('Ids', '==', req.params.Ids).get().then((snapshot) => {
+    if (snapshot.empty) {
+      console.log('No matching documents.');
+      return next();
+    } else {
+      snapshot.forEach((doc) => {
+        db.collection('SmartBin').doc(doc.id).update({ Status: req.params.Status })
+        res.send("PUT State Success");
+      });
+    }
+  })
     .catch((err) => {
       console.log('Error getting documents', err);
     });
