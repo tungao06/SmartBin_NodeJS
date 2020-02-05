@@ -11,7 +11,6 @@ exports.SmartBin_get_all = (req, res, next) => {
   console.log("GET SmartBin ALL");
 
   db.collection("SmartBin")
-    .orderBy("_id")
     .get()
     .then(snapshot => {
       snapshot.forEach(doc => {
