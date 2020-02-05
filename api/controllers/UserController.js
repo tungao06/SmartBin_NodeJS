@@ -105,6 +105,29 @@ exports.User_delete_User = (req, res, next) => {
     });
 };
 
+// Edit Point
+exports.User_edit_Point = (req, res, next) => {
+  db.collection("User")
+    .where("Uid", "==", req.params.Uid)
+    .get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log("No matching documents.");
+        return next();
+      } else {
+        snapshot.forEach(doc => {
+          console.log("PUT User");
+          db.collection("User")
+            .doc(doc.id)
+            .update({Point: req.params.Point});
+          res.send(data);
+        });
+      }
+    })
+    .catch(err => {
+      console.log("Error getting documents", err);
+    });
+};
 //Complex API
 exports.User_edit_User_Bin = (req, res, next) => {
   db.collection("User")
