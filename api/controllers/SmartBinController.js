@@ -126,7 +126,7 @@ exports.SmartBin_delete_SmartBin = (req, res, next) => {
 //var snap = false;
 
 //Complex API
-exports.SmartBin_put_SmartBin_ChangeState = (req, res, next) => {
+exports.SmartBin_put_SmartBin_ChangeState_Uid = (req, res, next) => {
   var state;
   db.collection("SmartBin")
     .where("Ids", "==", req.params.Ids)
@@ -140,11 +140,10 @@ exports.SmartBin_put_SmartBin_ChangeState = (req, res, next) => {
         snapshot.forEach(doc => {
           db.collection("SmartBin")
             .doc(doc.id)
-            .update({ State: req.params.State,UserUid: req.params.UserUid });
+            .update({ State: req.params.State, UserUid: req.params.UserUid });
           res.send("PUT State Success");
           //Snapshot State
-           db
-            .collection("SmartBin")
+          db.collection("SmartBin")
             .doc(doc.id)
             .onSnapshot(
               snapshot => {
@@ -168,6 +167,30 @@ exports.SmartBin_put_SmartBin_ChangeState = (req, res, next) => {
           //console.log(state);
           //Snapshot State
           console.log(this.state);
+        });
+      }
+    })
+    .catch(err => {
+      console.log("Error getting documents", err);
+    });
+};
+
+exports.SmartBin_put_SmartBin_ChangeState = (req, res, next) => {
+  var state;
+  db.collection("SmartBin")
+    .where("Ids", "==", req.params.Ids)
+    .get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log("No matching documents.");
+        return next();
+      } else {
+        //Put State
+        snapshot.forEach(doc => {
+          db.collection("SmartBin")
+            .doc(doc.id)
+            .update({ State: req.params.State });
+          res.send("PUT State Success");
         });
       }
     })
