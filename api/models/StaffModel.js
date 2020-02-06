@@ -3,35 +3,43 @@ const mongoose = require('mongoose');
 
 const UserSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    Ids :{
-        type:String,
+    Ids: {
+        type: String,
+        unique: true
         //required: '{PATH} is required!'
     },
     Uid: {
-        type:String
+        type: String,
+        unique: true
     },
-    NickName:{
-        type:String
+    NickName: {
+        type: String
     },
-    FirstName:{
-        type:String
+    FirstName: {
+        type: String
     },
-    SurName:{
-        type:String
+    SurName: {
+        type: String
     },
-    Phone:{
-        type:String
+    Phone: {
+        type: String
     },
-    Email:{
-        type:String
+    Email: {
+        type: String
     },
-    Image:{
-        type:String
-    }
-},{
-    timestamps:true
+    Image: {
+        type: String
+    },
+    SmartBin:
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'SmartBin'
+            , required: true
+        }
+}, {
+    timestamps: true
 })
 
 
 
-module.exports = mongoose.model('Staff',UserSchema);
+module.exports = mongoose.model('Staff', UserSchema);

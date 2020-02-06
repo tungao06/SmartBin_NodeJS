@@ -1,19 +1,19 @@
 const mongoose = require('mongoose');
-var Float = require('mongoose-float').loadType(mongoose,10);
+var Float = require('mongoose-float').loadType(mongoose, 10);
 
 
-const PostSchema = mongoose.Schema({
+const PostSchema = new mongoose.Schema({
     //_id: mongoose.Schema.Types.ObjectId,
     Name: {
         type: String,
         required: true
     },
     lat: {
-        type: Float ,
+        type: Float,
         required: true
     },
     lon: {
-        type: Float ,
+        type: Float,
         required: true
     },
     SmartBin:
@@ -21,6 +21,7 @@ const PostSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'SmartBin'
     }
+
 });
 
 

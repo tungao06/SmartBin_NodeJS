@@ -4,11 +4,13 @@ const UserSchema = new mongoose.Schema(
   {
     _id: mongoose.Schema.Types.ObjectId,
     Ids: {
-      type: String
+      type: String,
+      unique: true
       //required: '{PATH} is required!'
     },
     Uid: {
-      type: String
+      type: String,
+      unique: true
     },
     Name: {
       type: String
@@ -25,11 +27,20 @@ const UserSchema = new mongoose.Schema(
     Point: {
       type: Number
     },
-    GoodBin: {
-      type: Number
-    },
-    BadBin: {
-      type: Number
+    Bin: [{
+      type: new mongoose.Schema({
+        GoodBin: {
+          type: Number
+        },
+        BadBin: {
+          type: Number
+        }
+      })
+    }],
+    SmartBin:
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'SmartBin'
     }
 
   },

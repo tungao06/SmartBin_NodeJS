@@ -1,14 +1,14 @@
 const mongoose = require('mongoose');
-var Float = require('mongoose-float').loadType(mongoose,10);
+var Float = require('mongoose-float').loadType(mongoose, 10);
 
 
 
 const UserSchema = new mongoose.Schema({
-
     _id: mongoose.Schema.Types.ObjectId,
     Ids: {
         type: String,
-        required: true
+        required: true,
+        unique: true
     },
     Status: {
         type: Number,
@@ -26,23 +26,21 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    User:
+        {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User'
+        },
+    Staff:
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Staff'
+    },
     Location:
-        [
-            {
-                Name: {
-                    type: String,
-                    required: true
-                },
-                lat: {
-                    type: Float,
-                    required: true
-                },
-                lon: {
-                    type: Float,
-                    required: true
-                }
-            }]
-
+        [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Location'
+        }]
 }, {
     timestamps: true
 });
