@@ -5,7 +5,7 @@ const db = require('../../Setting');
 
 exports.Staff_get_all = (req, res, next) => {
 
-  //GET Staff All
+  // TODO : GET Staff All
   console.log("GET Staff ALL");
   var data = [];
 
@@ -34,7 +34,7 @@ exports.Staff_get_all = (req, res, next) => {
 
 exports.Staff_get_Staff = (req, res, next) => {
 
-  //GET Staff BY ID
+  // TODO : GET Staff BY ID
   console.log("GET Staff BY ID");
 
   try {
@@ -68,7 +68,7 @@ exports.Staff_get_Staff = (req, res, next) => {
 
 exports.Staff_create_Staff = async (req, res, next) => {
 
-  //POST Staff
+  // TODO : POST Staff
   console.log("POST Staff");
 
   try {
@@ -77,7 +77,7 @@ exports.Staff_create_Staff = async (req, res, next) => {
         if (staff.empty) {
           var data = JSON.parse(JSON.stringify(Staff(req.body)));
 
-          //POST Staff with JSON
+          // TODO : POST Staff with JSON
           console.log("POST Staff with JSON");
           db.collection("Staff")
             .doc()
@@ -106,11 +106,11 @@ exports.Staff_create_Staff = async (req, res, next) => {
 
 exports.Staff_edit_Staff = (req, res, next) => {
 
-  //PUT Staff
+  // TODO : PUT Staff
   console.log("PUT Staff");
 
   try {
-    //GET Staff By Ids
+    // TODO : GET Staff By Ids
     console.log("GET Staff By Uid");
 
     db.collection("Staff")
@@ -124,7 +124,7 @@ exports.Staff_edit_Staff = (req, res, next) => {
           console.log('PUT ' + snapshot.size + ' Item');
           snapshot.forEach(doc => {
 
-            //PUT Staff With JSON
+            // TODO : PUT Staff With JSON
             console.log("PUT Staff With JSON");
             var data = JSON.parse(JSON.stringify(Staff(req.body)));
             console.log(data);
@@ -151,7 +151,7 @@ exports.Staff_edit_Staff = (req, res, next) => {
 
 exports.Staff_delete_Staff = (req, res, next) => {
 
-  //GET Staff By Ids
+  // TODO : GET Staff By Ids
   console.log("GET Staff By Ids");
   db.collection("Staff")
     .where("Ids", "==", req.params.Ids)
@@ -161,9 +161,9 @@ exports.Staff_delete_Staff = (req, res, next) => {
         console.log("No matching documents.");
         next()
       } else {
-        //DELETE Staff By Ids
+        // TODO : DELETE Staff By Ids
         snapshot.forEach(doc => {
-          //DELETE Staff
+          // TODO : DELETE Staff
           console.log("DELETE Staff");
           db.collection("Staff")
             .doc(doc.id)

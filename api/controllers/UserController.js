@@ -6,7 +6,7 @@ const db = require("../../Setting");
 
 exports.User_get_all = (req, res, next) => {
 
-  //GET User All
+  // TODO : GET User All
   console.log("GET User ALL");
   var data = [];
 
@@ -35,7 +35,7 @@ exports.User_get_all = (req, res, next) => {
 
 exports.User_get_User = (req, res, next) => {
 
-  //GET User BY ID
+  // TODO : GET User BY ID
   console.log("GET User BY ID");
 
   try {
@@ -69,7 +69,7 @@ exports.User_get_User = (req, res, next) => {
 
 exports.User_create_User = async (req, res, next) => {
 
-  //POST User
+  // TODO : POST User
   console.log("POST User");
 
   try {
@@ -78,7 +78,7 @@ exports.User_create_User = async (req, res, next) => {
         if (user.empty) {
           var data = JSON.parse(JSON.stringify(User(req.body)));
 
-          //POST User with JSON
+          // TODO : POST User with JSON
           console.log("POST User with JSON");
           db.collection("User")
             .doc()
@@ -107,11 +107,11 @@ exports.User_create_User = async (req, res, next) => {
 
 exports.User_edit_User = (req, res, next) => {
 
-  //PUT User
+  // TODO : PUT User
   console.log("PUT User");
 
   try {
-    //GET User By Ids
+    // TODO : GET User By Ids
     console.log("GET User By Ids");
 
     db.collection("User")
@@ -125,7 +125,7 @@ exports.User_edit_User = (req, res, next) => {
           console.log('PUT ' + snapshot.size + ' Item');
           snapshot.forEach(doc => {
 
-            //PUT User With JSON
+            // TODO : PUT User With JSON
             console.log("PUT User With JSON");
             var data = JSON.parse(JSON.stringify(User(req.body)));
             console.log(data);
@@ -152,7 +152,7 @@ exports.User_edit_User = (req, res, next) => {
 
 exports.User_delete_User = (req, res, next) => {
 
-  //GET User By Ids
+  // TODO : GET User By Ids
   console.log("GET User By Ids");
   db.collection("User")
     .where("Ids", "==", req.params.Ids)
@@ -162,9 +162,9 @@ exports.User_delete_User = (req, res, next) => {
         console.log("No matching documents.");
         next()
       } else {
-        //DELETE User By Ids
+        // TODO : DELETE User By Ids
         snapshot.forEach(doc => {
-          //DELETE User
+          // TODO : DELETE User
           console.log("DELETE User");
           db.collection("User")
             .doc(doc.id)
@@ -181,7 +181,7 @@ exports.User_delete_User = (req, res, next) => {
     });
 };
 
-//Complex API
+//! Complex API
 exports.User_edit_User_Bin = (req, res, next) => {
   db.collection("User")
     .where("Uid", "==", req.params.Uid)

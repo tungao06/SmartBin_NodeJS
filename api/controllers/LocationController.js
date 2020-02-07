@@ -5,7 +5,7 @@ const db = require('../../Setting');
 
 exports.Location_get_all = (req, res, next) => {
 
-  //GET Location All
+  // TODO : GET Location All
   console.log("GET Location ALL");
   var data = [];
 
@@ -34,7 +34,7 @@ exports.Location_get_all = (req, res, next) => {
 
 exports.Location_get_Location = (req, res, next) => {
 
-  //GET Location BY ID
+  // TODO : GET Location BY ID
   console.log("GET Location BY ID");
 
   try {
@@ -68,13 +68,13 @@ exports.Location_get_Location = (req, res, next) => {
 
 exports.Location_create_Location = async (req, res, next) => {
 
-  //POST Location
+  // TODO : POST Location
   console.log("POST Location");
 
   try {
     var data = JSON.parse(JSON.stringify(Location(req.body)));
 
-    //POST Location with JSON
+    // TODO : POST Location with JSON
     console.log("POST Location with JSON");
     db.collection("Location")
       .doc()
@@ -92,15 +92,15 @@ exports.Location_create_Location = async (req, res, next) => {
 
 exports.Location_edit_Location = (req, res, next) => {
 
-  //PUT Location
+  // TODO : PUT Location
   console.log("PUT Location");
 
   try {
-    //GET Location By Ids
+    // TODO : GET Location By Ids
     console.log("GET Location By Uid");
 
     db.collection("Location")
-      .where("Uid", "==", req.params.Uid)
+      .where("_id", "==", req.params._id)
       .get()
       .then(snapshot => {
         if (snapshot.empty) {
@@ -110,7 +110,7 @@ exports.Location_edit_Location = (req, res, next) => {
           console.log('PUT ' + snapshot.size + ' Item');
           snapshot.forEach(doc => {
 
-            //PUT Location With JSON
+            // TODO : PUT Location With JSON
             console.log("PUT Location With JSON");
             var data = JSON.parse(JSON.stringify(Location(req.body)));
             console.log(data);
@@ -137,7 +137,7 @@ exports.Location_edit_Location = (req, res, next) => {
 
 exports.Location_delete_Location = (req, res, next) => {
 
-  //GET Location By Ids
+  // TODO : GET Location By Ids
   console.log("GET Location By _id");
   db.collection("Location")
     .where("_id", "==", req.params._id)
@@ -147,9 +147,9 @@ exports.Location_delete_Location = (req, res, next) => {
         console.log("No matching documents.");
         next()
       } else {
-        //DELETE Location By Ids
+        // TODO : DELETE Location By Ids
         snapshot.forEach(doc => {
-          //DELETE Location
+          // TODO : DELETE Location
           console.log("DELETE Location");
           db.collection("Location")
             .doc(doc.id)

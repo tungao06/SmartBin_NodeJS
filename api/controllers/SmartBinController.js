@@ -9,7 +9,7 @@ const User = require("../controllers/UserController");
 
 exports.SmartBin_get_all = (req, res, next) => {
 
-  //GET SmartBin All
+  // TODO : GET SmartBin All
   console.log("GET SmartBin ALL");
   var data = [];
 
@@ -38,7 +38,7 @@ exports.SmartBin_get_all = (req, res, next) => {
 
 exports.SmartBin_get_SmartBin = (req, res, next) => {
 
-  //GET SmartBin BY ID
+  // TODO : GET SmartBin BY ID
   console.log("GET SmartBin BY ID");
 
   try {
@@ -70,7 +70,7 @@ exports.SmartBin_get_SmartBin = (req, res, next) => {
   }
 };
 
-// Generation QR Code Data In SmartBin Image
+// TODO :  Generation QR Code Data In SmartBin Image
 function GenQRCode(data) {
   return new Promise((resolve, reject) => {
     resolve(QRCode.toDataURL(data));
@@ -79,16 +79,16 @@ function GenQRCode(data) {
 
 exports.SmartBin_create_SmartBin = async (req, res, next) => {
 
-  //POST SmartBin
+  // TODO : POST SmartBin
   console.log("POST SmartBin");
 
   try {
-    //Gen QR Code By SmartBin Ids
+    // TODO : Gen QR Code By SmartBin Ids
     console.log("Gen QR Code By SmartBin Ids");
     let qr = await GenQRCode(req.body.Ids);
     req.body.Image = qr;
 
-    //GET Check Location By _id
+    // TODO : GET Check Location By _id
     console.log("GET Check Location By _id");
     db.collection("Location").where("_id", "==", req.body.Location[0]._id).get()
       .then(location => {
@@ -101,7 +101,7 @@ exports.SmartBin_create_SmartBin = async (req, res, next) => {
               if (smartbin.empty) {
                 var data = JSON.parse(JSON.stringify(SmartBin(req.body)));
 
-                //POST SmartBin with JSON
+                // TODO : POST SmartBin with JSON
                 console.log("POST SmartBin with JSON");
                 db.collection("SmartBin")
                   .doc()
@@ -135,11 +135,11 @@ exports.SmartBin_create_SmartBin = async (req, res, next) => {
 
 exports.SmartBin_edit_SmartBin = (req, res, next) => {
 
-  //PUT SmartBin
+  // TODO : PUT SmartBin
   console.log("PUT SmartBin");
 
   try {
-    //GET SmartBin By Ids
+    // TODO : GET SmartBin By Ids
     console.log("GET SmartBin By Ids");
 
     db.collection("SmartBin")
@@ -151,7 +151,7 @@ exports.SmartBin_edit_SmartBin = (req, res, next) => {
           next();
         } else {
 
-          //GET Check Location By _id
+          // TODO : GET Check Location By _id
           console.log("GET Check Location By _id");
           db.collection("Location")
             .where("_id", "==", req.body.Location[0]._id)
@@ -164,15 +164,15 @@ exports.SmartBin_edit_SmartBin = (req, res, next) => {
                 console.log('PUT ' + snapshot.size + ' Item');
                 snapshot.forEach(doc => {
 
-                  //PUT SmartBin With JSON
+                  // TODO : PUT SmartBin With JSON
                   console.log("PUT SmartBin With JSON");
                   var data = JSON.parse(JSON.stringify(SmartBin(req.body)));
                   console.log(data);
                   db.collection("SmartBin")
                     .doc(doc.id)
                     .update(data);
-                });
                 res.send(data);
+                });
 
                 console.log("PUT SmartBin Complete")
                 console.log("***********************");
@@ -197,7 +197,7 @@ exports.SmartBin_edit_SmartBin = (req, res, next) => {
 
 exports.SmartBin_delete_SmartBin = (req, res, next) => {
 
-  //GET SmartBin By Ids
+  // TODO : GET SmartBin By Ids
   console.log("GET SmartBin By Ids");
   db.collection("SmartBin")
     .where("Ids", "==", req.params.Ids)
@@ -207,9 +207,9 @@ exports.SmartBin_delete_SmartBin = (req, res, next) => {
         console.log("No matching documents.");
         next()
       } else {
-        //DELETE SmartBin By Ids
+        // TODO : DELETE SmartBin By Ids
         snapshot.forEach(doc => {
-          //DELETE SmartBin
+          // TODO : DELETE SmartBin
           console.log("DELETE SmartBin");
           db.collection("SmartBin")
             .doc(doc.id)
@@ -227,9 +227,9 @@ exports.SmartBin_delete_SmartBin = (req, res, next) => {
 };
 
 
-//Complex API
+// ! : Complex API
 exports.SmartBin_put_SmartBin_ChangeState_Uid = (req, res, next) => {
-  var state;
+  var docId;
   db.collection("SmartBin")
     .where("Ids", "==", req.params.Ids)
     .get()
@@ -238,34 +238,13 @@ exports.SmartBin_put_SmartBin_ChangeState_Uid = (req, res, next) => {
         console.log("No matching documents.");
         return next();
       } else {
-        //Put State
+        // TODO : Put State
         snapshot.forEach(doc => {
           db.collection("SmartBin")
             .doc(doc.id)
             .update({ State: req.params.State, UserUid: req.params.UserUid });
           res.send("PUT State Success");
-          //Snapshot State
-          db.collection("SmartBin")
-            .doc(doc.id)
-            .onSnapshot(
-              snapshot => {
-                switch (snapshot.data().State) {
-                  case "0":
-                    console.log("OFF");
-                    break;
-                  case "1":
-                    console.log("WAITING");
-                    break;
-                  case "2":
-                    console.log("START");
-                    break;
-                }
-                // ...
-              },
-              err => {
-                console.log(`Encountered error: ${err}`);
-              }
-            );
+          docId = doc.id
           //console.log(state);
           //Snapshot State
           console.log(this.state);
@@ -277,22 +256,27 @@ exports.SmartBin_put_SmartBin_ChangeState_Uid = (req, res, next) => {
     });
 };
 
+
 exports.SmartBin_put_SmartBin_ChangeState = (req, res, next) => {
-  var state;
+
+  // TODO : GET SmartBin By Ids
+  console.log("GET SmartBin By Ids");
   db.collection("SmartBin")
     .where("Ids", "==", req.params.Ids)
+    .limit(1)
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
         console.log("No matching documents.");
         return next();
       } else {
-        //Put State
+        // TODO : Put State
+        console.log("Put State");
         snapshot.forEach(doc => {
           db.collection("SmartBin")
             .doc(doc.id)
             .update({ State: req.params.State });
-          res.send("PUT State Success");
+          res.send(doc.data());
         });
       }
     })
@@ -300,3 +284,33 @@ exports.SmartBin_put_SmartBin_ChangeState = (req, res, next) => {
       console.log("Error getting documents", err);
     });
 };
+
+
+var i = 0;
+// TODO : Snapshot State In SmartBin
+db.collection("SmartBin")
+  .orderBy('State')
+  .onSnapshot(
+    snapshot => {
+      snapshot.docChanges().forEach(doc => { // ? when Change doc will do it ..
+        //console.log(`Received doc snapshot: ${doc.doc.data().State}`)
+        switch (doc.doc.data().State) {
+          case "0":
+            i++
+            console.log(`OFF : ${i}`);
+            break;
+          case "1":
+            i++
+            console.log(`WAITING : ${i}`);
+            break;
+          case "2":
+            i++
+            console.log(`START : ${i}`);
+            break;
+        }
+      });
+    },
+    err => {
+      console.log(`Encountered error: ${err}`);
+    }
+  );

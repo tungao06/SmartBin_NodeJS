@@ -27,10 +27,10 @@ const UserSchema = new mongoose.Schema({
         required: true
     },
     User:
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User'
-        },
+    {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User'
+    },
     Staff:
     {
         type: mongoose.Schema.Types.ObjectId,

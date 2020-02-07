@@ -8,7 +8,7 @@ router.get('/:_id', LocationController.Location_get_Location);
 
 router.post('/', LocationController.Location_create_Location);
 
-router.put('/:Ids', LocationController.Location_edit_Location);
+router.put('/:_id', LocationController.Location_edit_Location);
 
 router.delete('/:_id', LocationController.Location_delete_Location);
 
