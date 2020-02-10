@@ -210,3 +210,47 @@ exports.User_edit_User_Bin = (req, res, next) => {
       console.log("Error getting documents", err);
     });
 };
+
+
+exports.User_edit_Point = (req, res, next) => {
+
+  // TODO : PUT User By Uid
+  console.log("PUT User By Uid");
+
+  try {
+    // TODO : GET User By Uid
+    console.log("GET User By Uid");
+
+    db.collection("User")
+      .where("Uid", "==", req.params.Uid)
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty) {
+          console.log("User is empty documents  !!");
+          next();
+        } else {
+          console.log('PUT ' + snapshot.size + ' Item');
+          snapshot.forEach(doc => {
+
+            // TODO : PUT User With JSON
+            console.log("PUT User With JSON");
+            db.collection("User")
+              .doc(doc.id)
+              .update({ Point : parseInt(req.params.Point) });
+            res.send(doc.data());
+          });
+
+          console.log("PUT User Complete")
+          console.log("***********************");
+        }
+      })
+      .catch(err => {
+        console.log("Error getting documents", err);
+        next()
+      });
+  }
+  catch (err) {
+    console.log('Error :', err);
+    next()
+  }
+};

@@ -296,15 +296,15 @@ db.collection("SmartBin")
       snapshot.docChanges().forEach(doc => { // ? when Change doc will do it ..
         //console.log(`Received doc snapshot: ${doc.doc.data().State}`)
         switch (doc.doc.data().State) {
-          case "0":
+          case 0:
             i++
             console.log(`OFF : ${i}`);
             break;
-          case "1":
+          case 1:
             i++
             console.log(`WAITING : ${i}`);
             break;
-          case "2":
+          case 2:
             i++
             console.log(`START : ${i}`);
             break;
@@ -315,3 +315,4 @@ db.collection("SmartBin")
       console.log(`Encountered error: ${err}`);
     }
   );
+
