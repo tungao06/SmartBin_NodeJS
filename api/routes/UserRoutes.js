@@ -10,7 +10,7 @@ router.post('/', UserController.User_create_User);
 
 router.put('/:Uid', UserController.User_edit_User);
 
-router.delete('/:Ids', UserController.User_delete_User);
+router.delete('/:Uid', UserController.User_delete_User);
 
 router.put('/:Uid/:GoodBin/:BadBin', UserController.User_edit_User_Bin);
 

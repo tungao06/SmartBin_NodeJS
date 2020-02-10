@@ -155,7 +155,7 @@ exports.User_delete_User = (req, res, next) => {
   // TODO : GET User By Ids
   console.log("GET User By Ids");
   db.collection("User")
-    .where("Ids", "==", req.params.Ids)
+    .where("Uid", "==", req.params.Uid)
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
