@@ -27,7 +27,7 @@ const UserSchema = new mongoose.Schema(
     Point: {
       type: Number
     },
-    Bin: [{
+    Bin: {
       type: new mongoose.Schema({
         _id: mongoose.Schema.Types.ObjectId,
         GoodBin: {
@@ -37,7 +37,7 @@ const UserSchema = new mongoose.Schema(
           type: Number
         }
       })
-    }],
+    },
     SmartBin:
     {
       type: mongoose.Schema.Types.ObjectId,
