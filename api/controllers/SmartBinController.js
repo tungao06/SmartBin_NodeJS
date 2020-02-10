@@ -195,6 +195,7 @@ exports.SmartBin_edit_SmartBin = (req, res, next) => {
   }
 };
 
+
 exports.SmartBin_delete_SmartBin = (req, res, next) => {
 
   // TODO : GET SmartBin By Ids
