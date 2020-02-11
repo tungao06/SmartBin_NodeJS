@@ -154,7 +154,7 @@ exports.SmartBin_edit_SmartBin = (req, res, next) => {
           // TODO : GET Check Location By _id
           console.log("GET Check Location By _id");
           db.collection("Location")
-            .where("_id", "==", req.body.Location[0]._id)
+            .where("_id", "==", req.body.Location._id)
             .get()
             .then(location => {
               if (location.empty) {
