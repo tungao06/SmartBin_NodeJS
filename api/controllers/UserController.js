@@ -127,8 +127,6 @@ exports.User_edit_User = (req, res, next) => {
 
             // TODO : PUT User With JSON
             console.log("PUT User With JSON");
-            req.body.Bin = doc.data().Bin
-            req.body.Bin = doc.data().Bin
             var data = JSON.parse(JSON.stringify(User(req.body)));
             console.log(data);
             db.collection("User")
