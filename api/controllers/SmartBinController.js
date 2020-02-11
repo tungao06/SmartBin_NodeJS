@@ -90,7 +90,7 @@ exports.SmartBin_create_SmartBin = async (req, res, next) => {
 
     // TODO : GET Check Location By _id
     console.log("GET Check Location By _id");
-    db.collection("Location").where("_id", "==", req.body.Location[0]._id).get()
+    db.collection("Location").where("_id", "==", req.body.Location._id).get()
       .then(location => {
         if (location.empty) {
           console.log("Location is empty documents  !!");

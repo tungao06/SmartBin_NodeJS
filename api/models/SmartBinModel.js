@@ -37,10 +37,23 @@ const UserSchema = new mongoose.Schema({
         ref: 'Staff'
     },
     Location:
-        [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'Location'
-        }]
+    {
+        type: new mongoose.Schema({
+          _id: mongoose.Schema.Types.ObjectId,
+          Name: {
+            type: String,
+            required: true
+        },
+        lat: {
+            type: Float,
+            required: true
+        },
+        lon: {
+            type: Float,
+            required: true
+        }
+        })
+      }
 }, {
     timestamps: true
 });
