@@ -252,7 +252,7 @@ exports.SmartBin_put_SmartBin_ChangeState_Uid = (req, res, next) => {
               snapshot.forEach(doc => {
                 db.collection("SmartBin")
                   .doc(doc.id)
-                  .update({ State: req.params.State, UserUid: req.params.UserUid });
+                  .update({ State: parseInt(req.params.State), UserUid: req.params.UserUid });
                 res.send("PUT State Success");
                 docId = doc.id
                 //console.log(state);
