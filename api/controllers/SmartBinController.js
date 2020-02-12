@@ -233,6 +233,7 @@ exports.SmartBin_put_SmartBin_ChangeState_Uid = (req, res, next) => {
   // TODO : GET USER
   db.collection("User")
     .where("Uid", "==", req.params.Uid)
+    .limit(1)
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
@@ -242,6 +243,7 @@ exports.SmartBin_put_SmartBin_ChangeState_Uid = (req, res, next) => {
         // TODO : GET SMARTBIN
         db.collection("SmartBin")
           .where("Ids", "==", req.params.Ids)
+          .limit(1)
           .get()
           .then(snapshot => {
             if (snapshot.empty) {
@@ -252,7 +254,7 @@ exports.SmartBin_put_SmartBin_ChangeState_Uid = (req, res, next) => {
               snapshot.forEach(doc => {
                 db.collection("SmartBin")
                   .doc(doc.id)
-                  .update({ State: parseInt(req.params.State), UserUid: req.params.UserUid });
+                  .update({ State: parseInt(req.params.State) });
                 res.send("PUT State Success");
                 docId = doc.id
                 //console.log(state);
