@@ -25,16 +25,19 @@ const UserSchema = new mongoose.Schema(
       type: String
     },
     Point: {
-      type: Number
+      type: Number,
+      default: 0
     },
     Bin: {
       type: new mongoose.Schema({
         _id: mongoose.Schema.Types.ObjectId,
         GoodBin: {
-          type: Number
+          type: Number,
+          default: 0
         },
         BadBin: {
-          type: Number
+          type: Number,
+          default: 0
         }
       })
     },
