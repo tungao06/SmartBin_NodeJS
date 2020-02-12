@@ -14,8 +14,8 @@ router.delete("/:Ids", SmartBinController.SmartBin_delete_SmartBin);
 
 // ! Complex API
 
-router.put('/:Ids/:Uid/:State', SmartBinController.SmartBin_put_SmartBin_ChangeState);
+router.put('/:Ids/:State', SmartBinController.SmartBin_put_SmartBin_ChangeState);
 
-//router.put('/:Ids/:UserUid/:State', SmartBinController.SmartBin_put_SmartBin_ChangeState_Uid);
+router.put('/:Ids/:Uid/:State', SmartBinController.SmartBin_put_SmartBin_ChangeState_Uid);
 
 module.exports = router;
