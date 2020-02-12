@@ -171,7 +171,7 @@ exports.SmartBin_edit_SmartBin = (req, res, next) => {
                   db.collection("SmartBin")
                     .doc(doc.id)
                     .update(data);
-                res.send(data);
+                  res.send(data);
                 });
 
                 console.log("PUT SmartBin Complete")
@@ -230,26 +230,40 @@ exports.SmartBin_delete_SmartBin = (req, res, next) => {
 
 // ! : Complex API
 exports.SmartBin_put_SmartBin_ChangeState_Uid = (req, res, next) => {
-  var docId;
-  db.collection("SmartBin")
-    .where("Ids", "==", req.params.Ids)
+  // TODO : GET USER
+  db.collection("User")
+    .where("Uid", "==", req.params.Uid)
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
         console.log("No matching documents.");
         return next();
       } else {
-        // TODO : Put State
-        snapshot.forEach(doc => {
-          db.collection("SmartBin")
-            .doc(doc.id)
-            .update({ State: req.params.State, UserUid: req.params.UserUid });
-          res.send("PUT State Success");
-          docId = doc.id
-          //console.log(state);
-          //Snapshot State
-          console.log(this.state);
-        });
+        // TODO : GET SMARTBIN
+        db.collection("SmartBin")
+          .where("Ids", "==", req.params.Ids)
+          .get()
+          .then(snapshot => {
+            if (snapshot.empty) {
+              console.log("No matching documents.");
+              return next();
+            } else {
+              // TODO : Put State
+              snapshot.forEach(doc => {
+                db.collection("SmartBin")
+                  .doc(doc.id)
+                  .update({ State: req.params.State, UserUid: req.params.UserUid });
+                res.send("PUT State Success");
+                docId = doc.id
+                //console.log(state);
+                //Snapshot State
+                console.log(this.state);
+              });
+            }
+          })
+          .catch(err => {
+            console.log("Error getting documents", err);
+          });
       }
     })
     .catch(err => {
