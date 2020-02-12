@@ -290,7 +290,7 @@ exports.SmartBin_put_SmartBin_ChangeState = (req, res, next) => {
         snapshot.forEach(doc => {
           db.collection("SmartBin")
             .doc(doc.id)
-            .update({ State: req.params.State });
+            .update({ State: parseInt(req.params.State)  });
           res.send(doc.data());
         });
       }
