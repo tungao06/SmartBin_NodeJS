@@ -192,14 +192,14 @@ exports.User_edit_User_Bin = (req, res, next) => {
         return next();
       } else {
         snapshot.forEach(doc => {
-          var gb = parseInt(doc.data().GoodBin);
-          var bb = parseInt(doc.data().BadBin);
-          gb += parseInt(req.params.GoodBin);
-          bb += parseInt(req.params.BadBin);
+          var gb = parseInt(req.params.GoodBin);
+          var bb = parseInt(req.params.BadBin);
+          
+          console.log(gb);
           console.log("PUT User");
           db.collection("User")
             .doc(doc.id)
-            .update({ GoodBin: gb, BadBin: bb });
+            .update({Bin:{GoodBin: gb, BadBin: bb }});
           res.send(doc.data());
         });
       }
