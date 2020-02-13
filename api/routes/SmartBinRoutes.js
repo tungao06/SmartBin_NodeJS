@@ -4,6 +4,8 @@ const SmartBinController = require("../controllers/SmartBinController");
 
 router.get('/', SmartBinController.SmartBin_get_all);
 
+router.get('/State/:Ids', SmartBinController.SmartBin_get_State);
+
 router.get('/:Ids', SmartBinController.SmartBin_get_SmartBin);
 
 router.post('/', SmartBinController.SmartBin_create_SmartBin);

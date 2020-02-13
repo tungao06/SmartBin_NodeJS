@@ -70,6 +70,40 @@ exports.SmartBin_get_SmartBin = (req, res, next) => {
   }
 };
 
+exports.SmartBin_get_State = (req, res, next) => {
+
+  // TODO : GET SmartBin BY ID
+  console.log("GET STATE IN SMARTBIN");
+
+  try {
+    db.collection("SmartBin")
+      .where("Ids", "==", req.params.Ids)
+      .limit(1)
+      .get()
+      .then(snapshot => {
+        if (snapshot.empty) {
+          console.log("SmartBin is empty documents  !!");
+          next();
+        } else {
+          snapshot.forEach(doc => {
+            console.log(doc.id, "=>", doc.data().State);
+            res.send(doc.data().State.toString());
+          });
+          console.log("GET STATE IN SmartBin completed");
+          console.log("***********************");
+        }
+      })
+      .catch(err => {
+        console.log("Error getting documents :", err);
+        res.send(err);
+      });
+  }
+  catch (err) {
+    console.log('Error :', err);
+    next()
+  }
+};
+
 // TODO :  Generation QR Code Data In SmartBin Image
 function GenQRCode(data) {
   return new Promise((resolve, reject) => {
