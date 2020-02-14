@@ -444,7 +444,7 @@ db.collection("SmartBin")
               catch (err) {
                 console.log(err);
               }
-            }, 5000);
+            }, 0);
             break;
           //! B
           case "B":
@@ -508,7 +508,7 @@ db.collection("SmartBin")
               catch (err) {
                 console.log(err);
               }
-            }, 5000);
+            }, 0);
             break;
         }
       });
