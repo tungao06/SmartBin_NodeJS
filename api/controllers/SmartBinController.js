@@ -355,7 +355,7 @@ exports.SmartBin_edit_SmartBin_Type = (req, res, next) => {
         snapshot.forEach(doc => {
           db.collection("SmartBin")
             .doc(doc.id)
-            .update({ Type: req.params.Type });
+            .update({ Type: req.params.Type, State: 1 });
           res.send(doc.data());
         });
       }
@@ -370,23 +370,145 @@ exports.SmartBin_edit_SmartBin_Type = (req, res, next) => {
 var i = 0;
 // TODO : Snapshot State In SmartBin
 db.collection("SmartBin")
-  .orderBy('State')
+  .orderBy('Type')
   .onSnapshot(
     snapshot => {
       snapshot.docChanges().forEach(doc => { // ? when Change doc will do it ..
         //console.log(`Received doc snapshot: ${doc.doc.data().State}`)
-        switch (doc.doc.data().State) {
-          case 0:
+        switch (doc.doc.data().Type) {
+          //! ""
+          case null:
             i++
-            console.log(`OFF : ${i}`);
+            console.log(`null : ${i}`);
             break;
-          case 1:
+
+          //! G
+          case "G":
             i++
-            console.log(`WAITING : ${i}`);
+            setTimeout(function () {
+              try {
+                db.collection("SmartBin")
+                  .where("Ids", "==", doc.doc.data().Ids)
+                  .limit(1)
+                  .get()
+                  .then(snapshot => {
+                    if (snapshot.empty) {
+                      console.log("No matching documents.");
+                      return next();
+                    } else {
+                      // TODO : Put State
+                      console.log("Put State");
+                      snapshot.forEach(doc => {
+
+                        db.collection("SmartBin")
+                          .doc(doc.id)
+                          .update({ Type: null, Uid: doc.data().Uid, Status: doc.data().Status + 1 });
+                        console.log("Put State Complete");
+                      });
+
+                      db.collection("User")
+                        .where("Uid", "==", doc.doc.data().Uid)
+                        .limit(1)
+                        .get()
+                        .then(snapshot => {
+                          if (snapshot.empty) {
+                            console.log("No matching documents.");
+                            return next();
+                          } else {
+                            // TODO : Put State
+                            console.log("Put Bin");
+                            snapshot.forEach(doc => {
+                              console.log(doc.id);
+                              db.collection("User")
+                                .doc(doc.id)
+                                .update({ Bin: { GoodBin: doc.data().Bin.GoodBin+1, BadBin: doc.data().Bin.BadBin } });
+
+                              console.log("Put State Complete");
+
+                            });
+                          }
+                        })
+                        .catch(err => {
+                          console.log("Error getting documents", err);
+                        });
+                    }
+                  })
+                  .catch(err => {
+                    console.log("Error getting documents", err);
+                  });
+
+
+                console.log(`G : ${i}`);
+
+              }
+              catch (err) {
+                console.log(err);
+              }
+            }, 5000);
             break;
-          case 2:
+          //! B
+          case "B":
             i++
-            console.log(`START : ${i}`);
+            setTimeout(function () {
+              try {
+                db.collection("SmartBin")
+                  .where("Ids", "==", doc.doc.data().Ids)
+                  .limit(1)
+                  .get()
+                  .then(snapshot => {
+                    if (snapshot.empty) {
+                      console.log("No matching documents.");
+                      return next();
+                    } else {
+                      // TODO : Put State
+                      console.log("Put State");
+                      snapshot.forEach(doc => {
+
+                        db.collection("SmartBin")
+                          .doc(doc.id)
+                          .update({ Type: null, Uid: doc.data().Uid, Status: doc.data().Status + 1 });
+                        console.log("Put State Complete");
+                      });
+
+                      db.collection("User")
+                        .where("Uid", "==", doc.doc.data().Uid)
+                        .limit(1)
+                        .get()
+                        .then(snapshot => {
+                          if (snapshot.empty) {
+                            console.log("No matching documents.");
+                            return next();
+                          } else {
+                            // TODO : Put State
+                            console.log("Put Bin");
+                            snapshot.forEach(doc => {
+                              console.log(doc.id);
+                              db.collection("User")
+                                .doc(doc.id)
+                                .update({ Bin: { GoodBin: doc.data().Bin.GoodBin, BadBin: doc.data().Bin.BadBin+1 } });
+
+                              console.log("Put State Complete");
+
+                            });
+                          }
+                        })
+                        .catch(err => {
+                          console.log("Error getting documents", err);
+                        });
+                    }
+                  })
+                  .catch(err => {
+                    console.log("Error getting documents", err);
+                  });
+
+
+                console.log(`B : ${i}`);
+
+              }
+              catch (err) {
+                console.log(err);
+              }
+            }, 5000);
             break;
         }
       });
