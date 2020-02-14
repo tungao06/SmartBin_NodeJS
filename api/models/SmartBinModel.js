@@ -14,6 +14,14 @@ const UserSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    Uid: {
+        type: Number,
+        required: true
+    },
+    Type: {
+        type: Number,
+        required: true
+    },
     State: {
         type: Number,
         required: true

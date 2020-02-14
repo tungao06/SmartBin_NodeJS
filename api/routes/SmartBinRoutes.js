@@ -12,11 +12,14 @@ router.post('/', SmartBinController.SmartBin_create_SmartBin);
 
 router.put('/:Ids', SmartBinController.SmartBin_edit_SmartBin);
 
+
 router.delete("/:Ids", SmartBinController.SmartBin_delete_SmartBin);
 
 // ! Complex API
 
-router.put('/:Ids/:State', SmartBinController.SmartBin_put_SmartBin_ChangeState);
+router.put('/:Ids/:Type', SmartBinController.SmartBin_edit_SmartBin_Type);
+
+router.put('/:Ids/:Uid/:State', SmartBinController.SmartBin_put_SmartBin_ChangeState);
 
 router.put('/:Ids/:Uid/:State', SmartBinController.SmartBin_put_SmartBin_ChangeState_Uid);
 

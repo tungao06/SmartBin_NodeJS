@@ -326,7 +326,7 @@ exports.SmartBin_put_SmartBin_ChangeState = (req, res, next) => {
         snapshot.forEach(doc => {
           db.collection("SmartBin")
             .doc(doc.id)
-            .update({ State: parseInt(req.params.State)  });
+            .update({ State: parseInt(req.params.State), Uid: req.params.Uid });
           res.send(doc.data());
         });
       }
@@ -335,6 +335,36 @@ exports.SmartBin_put_SmartBin_ChangeState = (req, res, next) => {
       console.log("Error getting documents", err);
     });
 };
+
+
+exports.SmartBin_edit_SmartBin_Type = (req, res, next) => {
+
+  // TODO : GET SmartBin By Ids
+  console.log("GET SmartBin By Ids");
+  db.collection("SmartBin")
+    .where("Ids", "==", req.params.Ids)
+    .limit(1)
+    .get()
+    .then(snapshot => {
+      if (snapshot.empty) {
+        console.log("No matching documents.");
+        return next();
+      } else {
+        // TODO : Put State
+        console.log("Put State");
+        snapshot.forEach(doc => {
+          db.collection("SmartBin")
+            .doc(doc.id)
+            .update({ Type: req.params.Type });
+          res.send(doc.data());
+        });
+      }
+    })
+    .catch(err => {
+      console.log("Error getting documents", err);
+    });
+};
+
 
 
 var i = 0;
