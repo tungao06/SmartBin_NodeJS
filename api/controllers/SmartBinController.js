@@ -43,7 +43,7 @@ exports.SmartBin_get_SmartBin = (req, res, next) => {
 
   try {
     db.collection("SmartBin")
-      .where("Ids", "==", req.params.Ids)
+      .where("Name", "==", req.params.Name)
       .limit(1)
       .get()
       .then(snapshot => {
@@ -77,7 +77,7 @@ exports.SmartBin_get_State = (req, res, next) => {
 
   try {
     db.collection("SmartBin")
-      .where("Ids", "==", req.params.Ids)
+      .where("Name", "==", req.params.Name)
       .limit(1)
       .get()
       .then(snapshot => {
@@ -117,9 +117,9 @@ exports.SmartBin_create_SmartBin = async (req, res, next) => {
   console.log("POST SmartBin");
 
   try {
-    // TODO : Gen QR Code By SmartBin Ids
-    console.log("Gen QR Code By SmartBin Ids");
-    let qr = await GenQRCode(req.body.Ids);
+    // TODO : Gen QR Code By SmartBin Name
+    console.log("Gen QR Code By SmartBin Name");
+    let qr = await GenQRCode(req.body.Name);
     req.body.Image = qr;
 
     // TODO : GET Check Location By _id
@@ -130,7 +130,7 @@ exports.SmartBin_create_SmartBin = async (req, res, next) => {
           console.log("Location is empty documents  !!");
           next()
         } else {
-          db.collection("SmartBin").where("Ids", "==", req.body.Ids).get()
+          db.collection("SmartBin").where("Name", "==", req.body.Name).get()
             .then(smartbin => {
               if (smartbin.empty) {
                 var data = JSON.parse(JSON.stringify(SmartBin(req.body)));
@@ -145,7 +145,7 @@ exports.SmartBin_create_SmartBin = async (req, res, next) => {
                 console.log("POST SmartBin completed");
                 console.log("***********************");
               } else {
-                console.log("SmartBin by Ids isn't Unique   !!");
+                console.log("SmartBin by Name isn't Unique   !!");
                 next()
 
               }
@@ -173,11 +173,11 @@ exports.SmartBin_edit_SmartBin = (req, res, next) => {
   console.log("PUT SmartBin");
 
   try {
-    // TODO : GET SmartBin By Ids
-    console.log("GET SmartBin By Ids");
+    // TODO : GET SmartBin By Name
+    console.log("GET SmartBin By Name");
 
     db.collection("SmartBin")
-      .where("Ids", "==", req.params.Ids)
+      .where("Name", "==", req.params.Name)
       .get()
       .then(snapshot => {
         if (snapshot.empty) {
@@ -232,17 +232,17 @@ exports.SmartBin_edit_SmartBin = (req, res, next) => {
 
 exports.SmartBin_delete_SmartBin = (req, res, next) => {
 
-  // TODO : GET SmartBin By Ids
-  console.log("GET SmartBin By Ids");
+  // TODO : GET SmartBin By Name
+  console.log("GET SmartBin By Name");
   db.collection("SmartBin")
-    .where("Ids", "==", req.params.Ids)
+    .where("Name", "==", req.params.Name)
     .get()
     .then(snapshot => {
       if (snapshot.empty) {
         console.log("No matching documents.");
         next()
       } else {
-        // TODO : DELETE SmartBin By Ids
+        // TODO : DELETE SmartBin By Name
         snapshot.forEach(doc => {
           // TODO : DELETE SmartBin
           console.log("DELETE SmartBin");
@@ -276,7 +276,7 @@ exports.SmartBin_put_SmartBin_ChangeState_Uid = (req, res, next) => {
       } else {
         // TODO : GET SMARTBIN
         db.collection("SmartBin")
-          .where("Ids", "==", req.params.Ids)
+          .where("Name", "==", req.params.Name)
           .limit(1)
           .get()
           .then(snapshot => {
@@ -310,10 +310,10 @@ exports.SmartBin_put_SmartBin_ChangeState_Uid = (req, res, next) => {
 
 exports.SmartBin_put_SmartBin_ChangeState = (req, res, next) => {
 
-  // TODO : GET SmartBin By Ids
-  console.log("GET SmartBin By Ids");
+  // TODO : GET SmartBin By Name
+  console.log("GET SmartBin By Name");
   db.collection("SmartBin")
-    .where("Ids", "==", req.params.Ids)
+    .where("Name", "==", req.params.Name)
     .limit(1)
     .get()
     .then(snapshot => {
@@ -339,10 +339,10 @@ exports.SmartBin_put_SmartBin_ChangeState = (req, res, next) => {
 
 exports.SmartBin_edit_SmartBin_Type = (req, res, next) => {
 
-  // TODO : GET SmartBin By Ids
-  console.log("GET SmartBin By Ids");
+  // TODO : GET SmartBin By Name
+  console.log("GET SmartBin By Name");
   db.collection("SmartBin")
-    .where("Ids", "==", req.params.Ids)
+    .where("Name", "==", req.params.Name)
     .limit(1)
     .get()
     .then(snapshot => {
@@ -366,7 +366,6 @@ exports.SmartBin_edit_SmartBin_Type = (req, res, next) => {
 };
 
 
-
 var i = 0;
 // TODO : Snapshot State In SmartBin
 db.collection("SmartBin")
@@ -388,7 +387,7 @@ db.collection("SmartBin")
             setTimeout(function () {
               try {
                 db.collection("SmartBin")
-                  .where("Ids", "==", doc.doc.data().Ids)
+                  .where("Name", "==", doc.doc.data().Name)
                   .limit(1)
                   .get()
                   .then(snapshot => {
@@ -436,10 +435,7 @@ db.collection("SmartBin")
                   .catch(err => {
                     console.log("Error getting documents", err);
                   });
-
-
                 console.log(`G : ${i}`);
-
               }
               catch (err) {
                 console.log(err);
@@ -452,7 +448,7 @@ db.collection("SmartBin")
             setTimeout(function () {
               try {
                 db.collection("SmartBin")
-                  .where("Ids", "==", doc.doc.data().Ids)
+                  .where("Name", "==", doc.doc.data().Name)
                   .limit(1)
                   .get()
                   .then(snapshot => {

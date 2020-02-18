@@ -5,7 +5,9 @@ var Float = require('mongoose-float').loadType(mongoose, 10);
 
 const UserSchema = new mongoose.Schema({
     _id: mongoose.Schema.Types.ObjectId,
-    Ids: {
+
+    // !! Change Ids to Name in SmartBin
+    Name: {
         type: String,
         required: true,
         unique: true
@@ -47,21 +49,21 @@ const UserSchema = new mongoose.Schema({
     Location:
     {
         type: new mongoose.Schema({
-          _id: mongoose.Schema.Types.ObjectId,
-          Name: {
-            type: String,
-            required: true
-        },
-        lat: {
-            type: Float,
-            required: true
-        },
-        lon: {
-            type: Float,
-            required: true
-        }
+            _id: mongoose.Schema.Types.ObjectId,
+            Name: {
+                type: String,
+                required: true
+            },
+            lat: {
+                type: Float,
+                required: true
+            },
+            lon: {
+                type: Float,
+                required: true
+            }
         })
-      }
+    }
 }, {
     timestamps: true
 });
